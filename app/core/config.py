@@ -3,6 +3,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import SecretStr
 
 
+def _postgres_url_with_psycopg(url: str) -> str:
+    """Use the PostgreSQL driver installed by requirements.txt."""
+    if url.startswith("postgresql://"):
+        return url.replace("postgresql://", "postgresql+psycopg://", 1)
+    return url
+
+
 class Settings(BaseSettings):
     app_name: str = "In4-Backend"
     environment: str = "development"
@@ -25,3 +32,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+settings.database_url = _postgres_url_with_psycopg(settings.database_url)
