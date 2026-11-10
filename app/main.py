@@ -9,6 +9,7 @@ from app.api.community import router as community_router
 from app.api.engagements import router as engagements_router
 from app.api.experts import router as experts_router
 from app.api.media import router as media_router
+from app.api.payments import router as payments_router
 
 app = FastAPI(
     title="IN4 API",
@@ -17,6 +18,7 @@ app = FastAPI(
 
 app.include_router(auth_router)
 app.include_router(experts_router)
+app.include_router(payments_router)
 app.include_router(articles_router)
 app.include_router(categories_router)
 app.include_router(engagements_router)

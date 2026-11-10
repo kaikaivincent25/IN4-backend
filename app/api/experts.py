@@ -205,7 +205,7 @@ def apply_as_expert(
         location=payload.location,
         languages=payload.languages,
         consultation_methods=payload.consultation_methods,
-        status=ExpertStatus.PENDING.value,
+        status=ExpertStatus.AWAITING_PAYMENT.value,
         badge_tier=ExpertBadgeTier.VERIFIED.value,
         slug=_unique_slug(db, _slug_base(name or payload.profession)),
     )
@@ -217,7 +217,7 @@ def apply_as_expert(
         raise
     db.refresh(expert)
     return ExpertApplicationResponse(
-        message="Expert application submitted.",
+        message="Expert application saved. Complete M-Pesa payment to submit it for review.",
         expert_id=expert.id,
     )
 
@@ -361,6 +361,8 @@ def verify_expert(
     expert = db.get(Expert, expert_id)
     if expert is None:
         raise HTTPException(status_code=404, detail="Expert application not found.")
+    if expert.status == ExpertStatus.AWAITING_PAYMENT.value:
+        raise HTTPException(status_code=409, detail="Verification payment is required before review.")
     if payload.status == ExpertStatus.VERIFIED.value and db.scalar(
         select(func.count(VerificationDocument.id)).where(VerificationDocument.expert_id == expert.id)
     ) == 0:

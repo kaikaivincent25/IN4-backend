@@ -4,6 +4,7 @@ from typing import Literal
 from pydantic import Field, model_validator
 
 from app.db.models.expert import ExpertBadgeTier, ExpertStatus
+from app.db.models.payment import VerificationPaymentStatus
 from app.db.schemas.articles import ArticleList
 from app.db.schemas.common import RequestSchema, ResponseSchema
 
@@ -45,7 +46,38 @@ class ExpertApplicationResponse(ResponseSchema):
     status: Literal["success"] = "success"
     message: str
     expert_id: int
-    application_status: Literal["pending"] = "pending"
+    application_status: Literal["awaiting_payment"] = "awaiting_payment"
+
+
+class VerificationPaymentConfigResponse(ResponseSchema):
+    available: bool
+    provider: Literal["mpesa"] = "mpesa"
+    amount: int
+    currency: Literal["KES"] = "KES"
+
+
+class VerificationPaymentRequest(RequestSchema):
+    phone_number: str = Field(min_length=9, max_length=16)
+
+
+class VerificationPaymentAttemptResponse(ResponseSchema):
+    expert_id: int
+    payment_id: int
+    payment_status: VerificationPaymentStatus
+    amount: int
+    currency: Literal["KES"] = "KES"
+    customer_message: str | None = None
+
+
+class MyVerificationPaymentResponse(ResponseSchema):
+    expert_id: int
+    expert_status: ExpertStatus
+    documents_uploaded: int
+    payment_id: int | None = None
+    payment_status: VerificationPaymentStatus | None = None
+    amount: int | None = None
+    currency: Literal["KES"] = "KES"
+    customer_message: str | None = None
 
 
 class ExpertListQuery(RequestSchema):

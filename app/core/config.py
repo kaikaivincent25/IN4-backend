@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     supabase_service_role_key: SecretStr | None = None
     supabase_profile_bucket: str = "profile-image"
     supabase_article_bucket: str = "avatars_uploads"
+    daraja_environment: str = "sandbox"
+    daraja_consumer_key: SecretStr | None = None
+    daraja_consumer_secret: SecretStr | None = None
+    daraja_shortcode: str | None = None
+    daraja_passkey: SecretStr | None = None
+    daraja_callback_url: str | None = None
+    expert_verification_fee_kes: int = 0
 
     model_config = SettingsConfigDict(
         env_file=".env",

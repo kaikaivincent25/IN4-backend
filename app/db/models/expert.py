@@ -10,6 +10,7 @@ from app.db.session import Base
 
 
 class ExpertStatus(str, Enum):
+    AWAITING_PAYMENT = "awaiting_payment"
     PENDING = "pending"
     VERIFIED = "verified"
     REJECTED = "rejected"

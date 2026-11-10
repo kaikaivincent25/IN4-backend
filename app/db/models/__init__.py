@@ -3,6 +3,7 @@ from app.db.models.category import Category, CategoryTemplate, ContentType
 from app.db.models.community import ArticleComment, Conversation, ConversationMessage, ExpertProfileComment
 from app.db.models.engagement import ArticleStats, ReadHistory, SavedArticle
 from app.db.models.expert import Expert, ExpertBadgeTier, ExpertStatus
+from app.db.models.payment import ExpertVerificationPayment, VerificationPaymentStatus
 from app.db.models.user import CustomUser
 from app.db.models.verification import ExpertVouch, VerificationDocument
 
@@ -24,8 +25,10 @@ __all__ = [
     "ExpertProfileComment",
     "ExpertBadgeTier",
     "ExpertStatus",
+    "ExpertVerificationPayment",
     "ExpertVouch",
     "VerificationDocument",
+    "VerificationPaymentStatus",
     "ReadHistory",
     "SavedArticle",
 ]

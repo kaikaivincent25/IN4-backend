@@ -20,3 +20,17 @@ services:
         value: profile-image
       - key: SUPABASE_ARTICLE_BUCKET
         value: avatars_uploads
+      - key: DARAJA_ENVIRONMENT
+        value: sandbox
+      - key: DARAJA_CONSUMER_KEY
+        sync: false
+      - key: DARAJA_CONSUMER_SECRET
+        sync: false
+      - key: DARAJA_SHORTCODE
+        sync: false
+      - key: DARAJA_PASSKEY
+        sync: false
+      - key: DARAJA_CALLBACK_URL
+        sync: false
+      - key: EXPERT_VERIFICATION_FEE_KES
+        sync: false
